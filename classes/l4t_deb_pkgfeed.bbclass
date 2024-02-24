@@ -41,6 +41,11 @@ def l4t_deb_src_uri(d):
 
 l4t_deb_src_uri[vardepsexclude] += "L4T_DEB_SOCNAME"
 
+def l4t_deb_pkgname(d, name):
+    if not name.startswith('nvidia-l4t-'):
+        name = 'nvidia-l4t-' + name
+    return "%s_${L4T_VERSION}${@l4t_bsp_debian_version_suffix(d, pkgname='%s')}_arm64.deb" % (name, name)
+
 SRC_URI = "${@l4t_deb_src_uri(d)}"
 do_unpack[depends] += "zstd-native:do_populate_sysroot"
 
